@@ -2,19 +2,12 @@
 
 factorize() {
     num=$1
-    factors=""
-
-    for ((i = 2; i <= num / 2; i++)); do
-        if ((num % i == 0)); then
-            factors+="=$i*$(($num / $i))\n"
-            break
-        fi
-    done
+    factors=$(factor "$num" | cut -d':' -f2 | tr ' ' '*')
 
     if [ -z "$factors" ]; then
         echo "Unable to factorize $num"
     else
-        echo -e "$num$factors"
+        echo "$num=$factors"
     fi
 }
 
