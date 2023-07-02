@@ -19,5 +19,5 @@ if [ $# -ne 1 ]; then
 fi
 
 while IFS= read -r num; do
-    check_factor "$num"
+    check_factor "$num" || echo "Unable to factorize $num"
 done < "$1"
