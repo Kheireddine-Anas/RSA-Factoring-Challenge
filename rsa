@@ -1,27 +1,23 @@
 #!/usr/bin/env bash
 
 check_factor() {
-    if [ $# -ne 1 ]; then
-        num=$1
-        factors=$(factor "$num")
-        primes=${factors##"$num: "}
-        IFS=' ' read -ra primes_arr <<< "$primes"
+    num=$1
+    factors=$(factor "$num")
+    factors=${factors#"$num: "}
+    IFS=' ' read -ra primes <<< "$factors"
 
-        if [ "${#primes_arr[@]}" -eq 2 ]; then
-            echo "$num=${primes_arr[0]}*${primes_arr[1]}"
-        else
-            echo "Unable to factorize $num"
-        fi
+    if [ "${#primes[@]}" -eq 2 ]; then
+        echo "$num=${primes[0]}*${primes[1]}"
     else
-        echo "Unable to factorize $1"
+        echo "Unable to factorize $num"
     fi
 }
 
 if [ $# -ne 1 ]; then
     echo 'Usage: rsa <file>'
     exit 1
-else
-    while read -r num; do
-        check_factor "$num"
-    done < "$1"
 fi
+
+while IFS= read -r num; do
+    check_factor "$num"
+done < "$1"
