@@ -7,6 +7,7 @@ factorize() {
     for ((i = 2; i <= num / 2; i++)); do
         if ((num % i == 0)); then
             factors+="=$i*$(($num / $i))\n"
+            break
         fi
     done
 
